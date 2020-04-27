@@ -26,7 +26,7 @@ namespace ThePackage.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Package",
+                name: "PackageType",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -36,7 +36,7 @@ namespace ThePackage.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Package", x => x.Id);
+                    table.PrimaryKey("PK_PackageType", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -75,11 +75,41 @@ namespace ThePackage.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     DateInsert = table.Column<DateTime>(nullable: false, defaultValueSql: "GETDATE()"),
-                    StatusId = table.Column<int>(nullable: false)
+                    SumDeliver = table.Column<decimal>(type: "money", nullable: false, defaultValue: 0m),
+                    SumPayed = table.Column<decimal>(type: "money", nullable: false, defaultValue: 0m),
+                    StatusId = table.Column<int>(nullable: false),
+                    PointSourceId = table.Column<int>(nullable: true),
+                    PointDestinationId = table.Column<int>(nullable: true),
+                    ClientSenderId = table.Column<int>(nullable: true),
+                    ClientReceiverId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Package", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Package_Client_ClientReceiverId",
+                        column: x => x.ClientReceiverId,
+                        principalTable: "Client",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Package_Client_ClientSenderId",
+                        column: x => x.ClientSenderId,
+                        principalTable: "Client",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Package_Point_PointDestinationId",
+                        column: x => x.PointDestinationId,
+                        principalTable: "Point",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Package_Point_PointSourceId",
+                        column: x => x.PointSourceId,
+                        principalTable: "Point",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Package_Units_StatusId",
                         column: x => x.StatusId,
@@ -112,8 +142,34 @@ namespace ThePackage.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "StaffToPoint",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    StaffId = table.Column<int>(nullable: false),
+                    PointId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_StaffToPoint", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_StaffToPoint_Point_PointId",
+                        column: x => x.PointId,
+                        principalTable: "Point",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_StaffToPoint_Staff_StaffId",
+                        column: x => x.StaffId,
+                        principalTable: "Staff",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.InsertData(
-                table: "Package",
+                table: "PackageType",
                 columns: new[] { "Id", "Comment", "Name" },
                 values: new object[,]
                 {
@@ -141,6 +197,26 @@ namespace ThePackage.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_Package_ClientReceiverId",
+                table: "Package",
+                column: "ClientReceiverId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Package_ClientSenderId",
+                table: "Package",
+                column: "ClientSenderId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Package_PointDestinationId",
+                table: "Package",
+                column: "PointDestinationId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Package_PointSourceId",
+                table: "Package",
+                column: "PointSourceId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Package_StatusId",
                 table: "Package",
                 column: "StatusId");
@@ -149,18 +225,31 @@ namespace ThePackage.Migrations
                 name: "IX_Staff_UnitsId",
                 table: "Staff",
                 column: "UnitsId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_StaffToPoint_PointId",
+                table: "StaffToPoint",
+                column: "PointId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_StaffToPoint_StaffId",
+                table: "StaffToPoint",
+                column: "StaffId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "Package");
+
+            migrationBuilder.DropTable(
+                name: "PackageType");
+
+            migrationBuilder.DropTable(
+                name: "StaffToPoint");
+
+            migrationBuilder.DropTable(
                 name: "Client");
-
-            migrationBuilder.DropTable(
-                name: "Package");
-
-            migrationBuilder.DropTable(
-                name: "Package");
 
             migrationBuilder.DropTable(
                 name: "Point");

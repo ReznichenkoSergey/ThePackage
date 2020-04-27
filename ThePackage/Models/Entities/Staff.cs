@@ -31,7 +31,7 @@ namespace ThePackage.Models.Entities
         [Column(TypeName = "nvarchar(50)")]
         public string Comment { get; set; }
         
-        [Required(AllowEmptyStrings = false)]
+        [Required]
         public int UnitsId { get; set; }
 
         /// <summary>

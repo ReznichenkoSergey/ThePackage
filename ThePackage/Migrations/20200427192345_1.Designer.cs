@@ -10,7 +10,7 @@ using ThePackage.Models.Database;
 namespace ThePackage.Migrations
 {
     [DbContext(typeof(PackageDbContext))]
-    [Migration("20200427151318_1")]
+    [Migration("20200427192345_1")]
     partial class _1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -56,20 +56,46 @@ namespace ThePackage.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int?>("ClientReceiverId");
+
+                    b.Property<int?>("ClientSenderId");
+
                     b.Property<DateTime>("DateInsert")
                         .ValueGeneratedOnAdd()
                         .HasDefaultValueSql("GETDATE()");
 
+                    b.Property<int?>("PointDestinationId");
+
+                    b.Property<int?>("PointSourceId");
+
                     b.Property<int>("StatusId");
 
+                    b.Property<decimal>("SumDeliver")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("money")
+                        .HasDefaultValue(0m);
+
+                    b.Property<decimal>("SumPayed")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("money")
+                        .HasDefaultValue(0m);
+
                     b.HasKey("Id");
+
+                    b.HasIndex("ClientReceiverId");
+
+                    b.HasIndex("ClientSenderId");
+
+                    b.HasIndex("PointDestinationId");
+
+                    b.HasIndex("PointSourceId");
 
                     b.HasIndex("StatusId");
 
                     b.ToTable("Package");
                 });
 
-            modelBuilder.Entity("ThePackage.Models.Entities.Package", b =>
+            modelBuilder.Entity("ThePackage.Models.Entities.PackageType", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -84,7 +110,7 @@ namespace ThePackage.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Package");
+                    b.ToTable("PackageType");
 
                     b.HasData(
                         new
@@ -174,6 +200,27 @@ namespace ThePackage.Migrations
                     b.ToTable("Staff");
                 });
 
+            modelBuilder.Entity("ThePackage.Models.Entities.StaffToPoint", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("PointId")
+                        .IsRequired();
+
+                    b.Property<int?>("StaffId")
+                        .IsRequired();
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PointId");
+
+                    b.HasIndex("StaffId");
+
+                    b.ToTable("StaffToPoint");
+                });
+
             modelBuilder.Entity("ThePackage.Models.Entities.Units", b =>
                 {
                     b.Property<int>("Id")
@@ -243,6 +290,22 @@ namespace ThePackage.Migrations
 
             modelBuilder.Entity("ThePackage.Models.Entities.Package", b =>
                 {
+                    b.HasOne("ThePackage.Models.Entities.Client", "ClientReceiver")
+                        .WithMany()
+                        .HasForeignKey("ClientReceiverId");
+
+                    b.HasOne("ThePackage.Models.Entities.Client", "ClientSender")
+                        .WithMany()
+                        .HasForeignKey("ClientSenderId");
+
+                    b.HasOne("ThePackage.Models.Entities.Point", "PointDestination")
+                        .WithMany()
+                        .HasForeignKey("PointDestinationId");
+
+                    b.HasOne("ThePackage.Models.Entities.Point", "PointSource")
+                        .WithMany()
+                        .HasForeignKey("PointSourceId");
+
                     b.HasOne("ThePackage.Models.Entities.Units", "Units")
                         .WithMany()
                         .HasForeignKey("StatusId")
@@ -254,6 +317,19 @@ namespace ThePackage.Migrations
                     b.HasOne("ThePackage.Models.Entities.Units", "Units")
                         .WithMany()
                         .HasForeignKey("UnitsId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("ThePackage.Models.Entities.StaffToPoint", b =>
+                {
+                    b.HasOne("ThePackage.Models.Entities.Point", "Point")
+                        .WithMany()
+                        .HasForeignKey("PointId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("ThePackage.Models.Entities.Staff", "Staff")
+                        .WithMany()
+                        .HasForeignKey("StaffId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

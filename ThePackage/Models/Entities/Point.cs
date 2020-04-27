@@ -27,5 +27,7 @@ namespace ThePackage.Models.Entities
 
         [Column(TypeName = "nvarchar(50)")]
         public string Comment { get; set; }
+
+        List<Package> Package { get; set; }
     }
 }

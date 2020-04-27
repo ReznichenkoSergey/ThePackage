@@ -25,6 +25,10 @@ namespace ThePackage.Controllers
             return service
                 .GetQuery()
                 .Include(x=>x.Units)
+                .Include(x=>x.PointDestination)
+                .Include(x => x.PointSource)
+                .Include(x => x.ClientReceiver)
+                .Include(x => x.ClientSender)
                 .ToList();
         }
 
@@ -32,7 +36,14 @@ namespace ThePackage.Controllers
         public Package Get(int id)
         {
             return service
-                .FindById(id);
+                .GetQuery()
+                .Where(x=>x.Id == id)
+                .Include(x => x.Units)
+                .Include(x => x.PointDestination)
+                .Include(x => x.PointSource)
+                .Include(x => x.ClientReceiver)
+                .Include(x => x.ClientSender)
+                .SingleOrDefault();
         }
 
         [HttpPost("save")]

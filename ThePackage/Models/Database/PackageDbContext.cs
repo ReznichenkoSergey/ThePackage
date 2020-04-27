@@ -16,6 +16,8 @@ namespace ThePackage.Models.Database
 
         public DbSet<Staff> Staff { get; set; }
 
+        public DbSet<StaffToPoint> StaffToPoint { get; set; }
+
         public PackageDbContext(DbContextOptions<PackageDbContext> options) : base(options)
         {
             
@@ -23,6 +25,12 @@ namespace ThePackage.Models.Database
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Package>()
+                .Property(x=>x.SumDeliver)
+                .HasDefaultValue(0);
+            modelBuilder.Entity<Package>()
+                .Property(x => x.SumPayed)
+                .HasDefaultValue(0);
             modelBuilder.Entity<Package>()
                 .Property("DateInsert")
                 .HasDefaultValueSql("GETDATE()");
