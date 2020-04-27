@@ -26,7 +26,7 @@ namespace ThePackage.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "PackageType",
+                name: "Package",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -36,7 +36,7 @@ namespace ThePackage.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PackageType", x => x.Id);
+                    table.PrimaryKey("PK_Package", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -113,7 +113,7 @@ namespace ThePackage.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "PackageType",
+                table: "Package",
                 columns: new[] { "Id", "Comment", "Name" },
                 values: new object[,]
                 {
@@ -160,7 +160,7 @@ namespace ThePackage.Migrations
                 name: "Package");
 
             migrationBuilder.DropTable(
-                name: "PackageType");
+                name: "Package");
 
             migrationBuilder.DropTable(
                 name: "Point");

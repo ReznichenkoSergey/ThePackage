@@ -39,7 +39,7 @@ namespace ThePackage.Models.Entities
 
         public References StatusName { get; set; }
 
-        public int PackageTypeId { get; set; }
+        public int PackageId { get; set; }
               
         [ForeignKey("PointSourceId")] public Point pointSource { get; set; }
 
@@ -51,7 +51,7 @@ namespace ThePackage.Models.Entities
 
         [ForeignKey("ClientReceiverId")] public Client clientReceiver { get; set; }
 
-        [ForeignKey("PackageTypeId")] public PackageType packageType { get; set; }
+        [ForeignKey("PackageId")] public Package Package { get; set; }
         */
     }
 }

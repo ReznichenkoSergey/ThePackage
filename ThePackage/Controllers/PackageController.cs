@@ -24,6 +24,7 @@ namespace ThePackage.Controllers
         {
             return service
                 .GetQuery()
+                .Include(x=>x.Units)
                 .ToList();
         }
 

@@ -38,6 +38,7 @@ namespace ThePackage
             services.AddTransient<IService<Staff>, StaffService>();
             services.AddTransient<IService<Units>, ReferencesService>();
             services.AddTransient<IService<PackageType>, PackageTypeService>();
+            services.AddTransient<IService<Package>, PackageService>();
 
             services.AddMvc(options => { options.AllowEmptyInputInBodyModelBinding = true; })
                 .AddJsonOptions(options =>

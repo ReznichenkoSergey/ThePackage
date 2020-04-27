@@ -69,7 +69,7 @@ namespace ThePackage.Migrations
                     b.ToTable("Package");
                 });
 
-            modelBuilder.Entity("ThePackage.Models.Entities.PackageType", b =>
+            modelBuilder.Entity("ThePackage.Models.Entities.Package", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -84,7 +84,7 @@ namespace ThePackage.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("PackageType");
+                    b.ToTable("Package");
 
                     b.HasData(
                         new
