@@ -25,6 +25,8 @@ namespace ThePackage.Controllers
             return service
                 .GetQuery()
                 .Include(x=>x.Units)
+                .Include(x=>x.StaffToPoint)
+                .ThenInclude(x=>x.Point)
                 .ToList();
         }
 

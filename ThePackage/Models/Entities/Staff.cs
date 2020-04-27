@@ -38,5 +38,7 @@ namespace ThePackage.Models.Entities
         /// Должность
         /// </summary>
         public Units Units { get; set; }
+
+        public List<StaffToPoint> StaffToPoint { get; set; }
     }
 }
