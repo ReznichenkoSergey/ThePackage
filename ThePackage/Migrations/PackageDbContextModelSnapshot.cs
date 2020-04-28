@@ -326,7 +326,7 @@ namespace ThePackage.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("ThePackage.Models.Entities.Staff", "Staff")
-                        .WithMany()
+                        .WithMany("StaffToPoint")
                         .HasForeignKey("StaffId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

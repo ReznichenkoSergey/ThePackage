@@ -36,6 +36,23 @@ namespace ThePackage.Controllers
             return service.FindById(id);
         }
 
+        /// <summary>
+        /// Поиск по должности
+        /// </summary>
+        /// <param name="roleId"></param>
+        /// <returns></returns>
+        [HttpGet("role/{roleId}")]
+        public List<Staff> GetByStaffByRoleId(int roleId)
+        {
+            return service
+                .GetQuery()
+                .Include(x => x.Units)
+                .Where(x=>x.UnitsId == roleId)
+                .Include(x => x.StaffToPoint)
+                .ThenInclude(x => x.Point)
+                .ToList();
+        }
+
         [HttpPost("save")]
         public List<Staff> Post(Staff value)
         {

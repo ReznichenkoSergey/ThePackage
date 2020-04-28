@@ -10,7 +10,7 @@ using ThePackage.Models.Database;
 namespace ThePackage.Migrations
 {
     [DbContext(typeof(PackageDbContext))]
-    [Migration("20200427192345_1")]
+    [Migration("20200428115515_1")]
     partial class _1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -328,7 +328,7 @@ namespace ThePackage.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("ThePackage.Models.Entities.Staff", "Staff")
-                        .WithMany()
+                        .WithMany("StaffToPoint")
                         .HasForeignKey("StaffId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

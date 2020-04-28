@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -37,5 +38,6 @@ namespace ThePackage.Models.Entities
 
         [ForeignKey("ClientReceiverId")] public Client ClientReceiver { get; set; }
 
+        //public PackageHistory PackageStatusHistory { get; set; }
     }
 }
