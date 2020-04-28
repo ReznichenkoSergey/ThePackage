@@ -34,6 +34,7 @@ namespace ThePackage
             );
 
             services.AddTransient<IService<Client>, ClientService>();
+            services.AddTransient<IAsyncService<Client>, ClientAsyncService>();
             services.AddTransient<IService<Point>, PointService>();
             services.AddTransient<IService<Staff>, StaffService>();
             services.AddTransient<IService<Units>, ReferencesService>();
