@@ -25,9 +25,9 @@ namespace ThePackage.Models.Abstract
             await dbContext.SaveChangesAsync();
         }
 
-        public Task<T> FindById(int id)
+        public async Task<T> FindById(int id)
         {
-            return dbSet.FindAsync(id);
+            return await dbSet.FindAsync(id);
         }
 
         public IEnumerable<T> Get(Func<T, bool> predicate)

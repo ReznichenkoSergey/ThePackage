@@ -28,6 +28,12 @@ namespace ThePackage.Models.Entities
         [Column(TypeName = "nvarchar(30)")]
         public string EMail { get; set; }
 
+        [Column(TypeName = "nvarchar(20)")]
+        public string Login { get; set; }
+
+        [Column(TypeName = "nvarchar(30)")]
+        public string Password { get; set; }
+
         [Column(TypeName = "nvarchar(50)")]
         public string Comment { get; set; }
         

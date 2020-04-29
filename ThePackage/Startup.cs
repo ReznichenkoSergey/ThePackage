@@ -1,9 +1,11 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
@@ -26,13 +28,13 @@ namespace ThePackage
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
-        {
+        {            
             services.AddDbContext<PackageDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("SQLConnectionString")
                     )
             );
-
+            
             services.AddTransient<IService<Client>, ClientService>();
             services.AddTransient<IAsyncService<Client>, ClientAsyncService>();
             services.AddTransient<IService<Point>, PointService>();
@@ -48,7 +50,8 @@ namespace ThePackage
                     options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
                     options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
                 })
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
