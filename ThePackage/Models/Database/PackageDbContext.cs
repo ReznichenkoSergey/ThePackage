@@ -31,9 +31,6 @@ namespace ThePackage.Models.Database
             modelBuilder.Entity<Package>()
                 .Property(x => x.SumPayed)
                 .HasDefaultValue(0);
-            modelBuilder.Entity<Package>()
-                .Property("DateInsert")
-                .HasDefaultValueSql("GETDATE()");
             modelBuilder
                 .Entity<PackageType>()
                 .HasData(

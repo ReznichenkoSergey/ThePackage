@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ThePackage.Models.Database;
 
 namespace ThePackage.Migrations
 {
     [DbContext(typeof(PackageDbContext))]
-    partial class PackageDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200430131406_PackageActionHistory")]
+    partial class PackageActionHistory
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

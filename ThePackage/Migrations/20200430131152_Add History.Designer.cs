@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ThePackage.Models.Database;
 
 namespace ThePackage.Migrations
 {
     [DbContext(typeof(PackageDbContext))]
-    partial class PackageDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200430131152_Add History")]
+    partial class AddHistory
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -62,9 +64,9 @@ namespace ThePackage.Migrations
 
                     b.Property<int?>("ClientSenderId");
 
-                    b.Property<DateTime>("DateInsert");
-
-                    b.Property<DateTime?>("DateUpdate");
+                    b.Property<DateTime>("DateInsert")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValueSql("GETDATE()");
 
                     b.Property<int?>("PointDestinationId");
 
@@ -159,10 +161,6 @@ namespace ThePackage.Migrations
 
                     b.Property<string>("Comment")
                         .HasColumnType("nvarchar(50)");
-
-                    b.Property<DateTime>("DateInsert");
-
-                    b.Property<DateTime?>("DateUpdate");
 
                     b.Property<string>("Name")
                         .IsRequired()

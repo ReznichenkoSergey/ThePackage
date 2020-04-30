@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
 using ThePackage.Models.Abstract;
 
 namespace ThePackage.Models.Entities
@@ -11,7 +8,7 @@ namespace ThePackage.Models.Entities
     /// <summary>
     /// Отделение
     /// </summary>
-    public class Point
+    public class Point : ActionHistory
     {
         [Key,
             DatabaseGenerated(DatabaseGeneratedOption.Identity)]

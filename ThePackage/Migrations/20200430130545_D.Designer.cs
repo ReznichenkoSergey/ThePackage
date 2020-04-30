@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ThePackage.Models.Database;
 
 namespace ThePackage.Migrations
 {
     [DbContext(typeof(PackageDbContext))]
-    partial class PackageDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200430130545_D")]
+    partial class D
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -34,7 +36,7 @@ namespace ThePackage.Migrations
 
                     b.Property<DateTime>("DateInsert");
 
-                    b.Property<DateTime?>("DateUpdate");
+                    b.Property<DateTime>("DateUpdate");
 
                     b.Property<string>("EMail")
                         .HasColumnType("nvarchar(30)");
@@ -62,9 +64,9 @@ namespace ThePackage.Migrations
 
                     b.Property<int?>("ClientSenderId");
 
-                    b.Property<DateTime>("DateInsert");
-
-                    b.Property<DateTime?>("DateUpdate");
+                    b.Property<DateTime>("DateInsert")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValueSql("GETDATE()");
 
                     b.Property<int?>("PointDestinationId");
 
@@ -160,10 +162,6 @@ namespace ThePackage.Migrations
                     b.Property<string>("Comment")
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<DateTime>("DateInsert");
-
-                    b.Property<DateTime?>("DateUpdate");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(50)");
@@ -185,10 +183,6 @@ namespace ThePackage.Migrations
 
                     b.Property<string>("Comment")
                         .HasColumnType("nvarchar(50)");
-
-                    b.Property<DateTime>("DateInsert");
-
-                    b.Property<DateTime?>("DateUpdate");
 
                     b.Property<string>("EMail")
                         .HasColumnType("nvarchar(30)");

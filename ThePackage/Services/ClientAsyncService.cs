@@ -36,9 +36,9 @@ namespace ThePackage.Services
             return Repository.UpdateAsync(updatedItem);
         }
 
-        public Task<Client> FindById(int id)
+        public Task<Client> FindByIdAsync(int id)
         {
-            return Repository.FindById(id);
+            return Repository.FindByIdAsync(id);
         }
 
         public IQueryable<Client> GetQuery()

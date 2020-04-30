@@ -4,7 +4,7 @@ using ThePackage.Models.Abstract;
 
 namespace ThePackage.Models.Entities
 {
-    public class Client
+    public class Client: ActionHistory
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key] public int Id { get; set; }

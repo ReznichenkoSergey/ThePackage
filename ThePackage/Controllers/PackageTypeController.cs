@@ -33,13 +33,20 @@ namespace ThePackage.Controllers
             return service.FindById(id);
         }
 
-        [HttpPost("save")]
-        public List<PackageType> Post(PackageType value)
+        [HttpPost("save/{id}")]
+        public void Post(int id, PackageType value)
         {
-            return service
-                .GetAll()
-                .Where(x=> x.Id == value.Id)
-                .ToList();
+            if (value.Id == id)
+            {
+                PackageType packageType = service.FindById(id);
+                if (packageType != null)
+                {
+                    packageType.Name = value.Name;
+                    packageType.Comment = value.Comment;
+                    //
+                    service.Update(id, packageType);
+                }
+            }
         }
 
         [HttpPut]

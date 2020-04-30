@@ -10,7 +10,7 @@ namespace ThePackage.Services.Interfaces
     {
         GenericAsyncRepository<T> Repository { get; set; }
         IQueryable<T> GetAll();
-        Task<T> FindById(int id);
+        Task<T> FindByIdAsync(int id);
         Task CreateAsync(T item);
         Task DeleteAsync(int id);
         Task UpdateAsync(T updatedItem);

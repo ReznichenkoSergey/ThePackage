@@ -33,13 +33,24 @@ namespace ThePackage.Controllers
             return service.FindById(id);
         }
 
-        [HttpPost("save")]
-        public List<Client> Post(Client value)
+        [HttpPost("save/{id}")]
+        public void Post(int id, Client value)
         {
-            return service
-                .GetAll()
-                .Where(x => x.Id == value.Id)
-                .ToList();
+            if (value.Id == id)
+            {
+                Client client = service.FindById(id);
+                if (client != null)
+                {
+                    client.Code = value.Code;
+                    client.DateUpdate = DateTime.UtcNow;
+                    client.Name = value.Name;
+                    client.EMail = value.EMail;
+                    client.Phone = value.Phone;
+                    client.Comment = value.Comment;
+                    //
+                    service.Update(id, client);
+                }
+            }
         }
 
         [HttpPut]

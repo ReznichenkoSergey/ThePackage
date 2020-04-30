@@ -46,13 +46,20 @@ namespace ThePackage.Controllers
                 .SingleOrDefault();
         }
 
-        [HttpPost("save")]
-        public List<Package> Post(Package value)
+        [HttpPost("save/{id}")]
+        public void Post(int id, Package value)
         {
-            return service
-                .GetAll()
-                .Where(x => x.Id == value.Id)
-                .ToList();
+            if (value.Id == id)
+            {
+                Package package = service.FindById(id);
+                if (package != null)
+                {
+                    package.StatusId = value.StatusId;
+                    package.DateUpdate = DateTime.UtcNow;
+                    //
+                    service.Update(id, package);
+                }
+            }
         }
 
         [HttpPut]

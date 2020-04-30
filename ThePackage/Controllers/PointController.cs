@@ -33,12 +33,21 @@ namespace ThePackage.Controllers
             return service.FindById(id);
         }
 
-        [HttpPost("save")]
-        public List<Point> Post(Point value)
+        [HttpPost("save/{id}")]
+        public void Post(int id, Point value)
         {
-            return service
-                .GetAll()
-                .ToList();
+            if (value.Id == id)
+            {
+                Point point = service.FindById(id);
+                if (point != null)
+                {
+                    point.Name = value.Name;
+                    point.Address = value.Address;
+                    point.Comment = value.Comment;
+                    //
+                    service.Update(id, point);
+                }
+            }
         }
 
         [HttpPut]

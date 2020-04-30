@@ -29,33 +29,46 @@ namespace ThePackage.Controllers
         }
 
         [HttpGet("{id}")]
-        public Task<Client> Get(int id)
+        public async Task<Client> GetAsync(int id)
         {
-            return service
-                .FindById(id);
+            return await service
+                .FindByIdAsync(id);
         }
 
-        [HttpPost("save")]
-        public List<Client> Post(Client value)
+        [HttpPost("save/{id}")]
+        public async Task Post(int id, Client value)
         {
-            return service
-                .GetAll()
-                .AsParallel()
-                .Where(x => x.Id == value.Id)
-                .ToList();
+            if (value.Id == id)
+            {
+                Client client = await service.FindByIdAsync(id);
+                if (client != null)
+                {
+                    client.Code = value.Code;
+                    client.DateUpdate = DateTime.UtcNow;
+                    client.Name = value.Name;
+                    client.EMail = value.EMail;
+                    client.Phone = value.Phone;
+                    client.Comment = value.Comment;
+                    //
+                    await service
+                        .UpdateAsync(client);
+                }
+            }
         }
 
         [HttpPut]
-        public Task Put(Client value)
+        public async Task<Client> PutAsync(Client value)
         {
-            return service
+            await service
                 .CreateAsync(value);
+            return await service
+                .FindByIdAsync(value.Id);
         }
 
         [HttpDelete("{id}")]
-        public Task DeleteAsync(int id)
+        public async Task DeleteAsync(int id)
         {
-            return service
+            await service
                 .DeleteAsync(id);
         }
     }

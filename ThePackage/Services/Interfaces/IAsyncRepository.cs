@@ -8,7 +8,7 @@ namespace ThePackage.Services.Interfaces
     public interface IAsyncRepository<T>
     {
         Task CreateAsync(T item);
-        Task<T> FindById(int id);
+        Task<T> FindByIdAsync(int id);
         IEnumerable<T> Get(Func<T, bool> predicate);
         IQueryable<T> GetAll();
         Task RemoveAsync(int id);

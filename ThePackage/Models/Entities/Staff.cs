@@ -4,10 +4,11 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
+using ThePackage.Models.Abstract;
 
 namespace ThePackage.Models.Entities
 {
-    public class Staff
+    public class Staff : ActionHistory
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]        
         [Key] 

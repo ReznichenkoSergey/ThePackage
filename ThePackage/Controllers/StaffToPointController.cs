@@ -35,13 +35,20 @@ namespace ThePackage.Controllers
             return service.FindById(id);
         }
 
-        [HttpPost("save")]
-        public List<StaffToPoint> Post(StaffToPoint value)
+        [HttpPost("save/{id}")]
+        public void Post(int id, StaffToPoint value)
         {
-            return service
-                .GetAll()
-                .Where(x => x.Id == value.Id)
-                .ToList();
+            if (value.Id == id)
+            {
+                StaffToPoint staffToPoint = service.FindById(id);
+                if (staffToPoint != null)
+                {
+                    staffToPoint.PointId = value.PointId;
+                    staffToPoint.StaffId = value.StaffId;
+                    //
+                    service.Update(id, staffToPoint);
+                }
+            }
         }
 
         [HttpPut]
