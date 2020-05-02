@@ -5,6 +5,7 @@ using ThePackage.Models.Entities;
 using Microsoft.AspNetCore.Mvc;
 using ThePackage.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using ThePackage.Models.DtoClasses;
 
 namespace ThePackage.Controllers
 {
@@ -32,6 +33,35 @@ namespace ThePackage.Controllers
                 .ToList();
         }
 
+        [HttpGet("dto")]
+        public List<PackageDto> GetDto()
+        {
+            return service
+                .GetQuery()
+                .Include(x => x.Units)
+                .Include(x => x.PointDestination)
+                .Include(x => x.PointSource)
+                .Include(x => x.ClientReceiver)
+                .Include(x => x.ClientSender)
+                .Select(x=>new PackageDto
+                {
+                    Number = x.Id,
+                    DateCreate = x.DateInsert,
+                    SumDelivery = x.SumDeliver,
+                    SumPayed = x.SumPayed,
+                    PointSourceName = x.PointSource.Name,
+                    PointSourceAddress = x.PointSource.Address,
+                    PointDestinationName = x.PointDestination.Name,
+                    PointDestinationAddress = x.PointDestination.Address,
+                    StatusName = x.Units.Name,
+                    ClientReceiverName = x.ClientReceiver.Name,
+                    ClientReceiverPhone = x.ClientReceiver.Phone,
+                    ClientSenderName = x.ClientSender.Name,
+                    ClientSenderPhone = x.ClientSender.Phone
+                })
+                .ToList();
+        }
+
         [HttpGet("{id}")]
         public Package Get(int id)
         {
@@ -43,6 +73,36 @@ namespace ThePackage.Controllers
                 .Include(x => x.PointSource)
                 .Include(x => x.ClientReceiver)
                 .Include(x => x.ClientSender)
+                .SingleOrDefault();
+        }
+
+        [HttpGet("dto/{id}")]
+        public PackageDto GetDtoById(int id)
+        {
+            return service
+                .GetQuery()
+                .Where(x=>x.Id == id)
+                .Include(x => x.Units)
+                .Include(x => x.PointDestination)
+                .Include(x => x.PointSource)
+                .Include(x => x.ClientReceiver)
+                .Include(x => x.ClientSender)
+                .Select(x => new PackageDto
+                {
+                    Number = x.Id,
+                    DateCreate = x.DateInsert,
+                    SumDelivery = x.SumDeliver,
+                    SumPayed = x.SumPayed,
+                    PointSourceName = x.PointSource.Name,
+                    PointSourceAddress = x.PointSource.Address,
+                    PointDestinationName = x.PointDestination.Name,
+                    PointDestinationAddress = x.PointDestination.Address,
+                    StatusName = x.Units.Name,
+                    ClientReceiverName = x.ClientReceiver.Name,
+                    ClientReceiverPhone = x.ClientReceiver.Phone,
+                    ClientSenderName = x.ClientSender.Name,
+                    ClientSenderPhone = x.ClientSender.Phone
+                })
                 .SingleOrDefault();
         }
 

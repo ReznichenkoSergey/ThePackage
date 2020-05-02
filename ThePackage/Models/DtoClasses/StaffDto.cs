@@ -1,5 +1,5 @@
 ﻿
-namespace ThePackage.Models.Entities
+namespace ThePackage.Models.DtoClasses
 {
     public class StaffDto
     {

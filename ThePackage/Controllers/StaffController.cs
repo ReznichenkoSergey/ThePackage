@@ -7,6 +7,7 @@ using ThePackage.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Runtime.CompilerServices;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using ThePackage.Models.DtoClasses;
 
 namespace ThePackage.Controllers
 {
